@@ -4,7 +4,12 @@
 import cPickle
 
 class Primes(object):
+	"""This class is used to compute and save prime numbers and also
+	calculate prime number decompositions"""
+
 	def __init__(self, maxNumber = 100, filename = ""):
+		"""Constuctor initializes all primes until maxNumber or
+		imports them from a binary file called filename"""
 		self.__Filter = []
 		self.__Primes = []
 		self.__checkForInt(maxNumber)
@@ -19,6 +24,7 @@ class Primes(object):
 			self.importPrimes(filename)
 
 	def importPrimes(self, filename):
+		"""Imports prime numbers from the binary file filename"""
 		with open(filename, 'rb') as f:
 			self.__Primes = cPickle.load(f)
 		self.__MaxNumber = len(self.__Primes)
@@ -29,18 +35,29 @@ class Primes(object):
 			self.__LargestPrimes = None
 
 	def exportPrimes(self, filename):
+		"""Exports prime numbers to the binary file filename"""
 		with open(filename, 'wb') as f:
 			cPickle.dump(self.__Primes, f, cPickle.HIGHEST_PROTOCOL)
 
-	def importDecomposedNumbers(self, fileName):
-		with open(fileName, 'rb') as f:
+	def importDecomposedNumbers(self, filename):
+		"""Imports numbers and their prime number decomposition from the
+		binary file filename"""
+		with open(filename, 'rb') as f:
 			self.__DecomposedNumbers = cPickle.load(f)
 
-	def exportDecomposedNumbers(self, fileName):
-		with open(fileName, 'wb') as f:
+	def exportDecomposedNumbers(self, filename):
+		"""Exports numbers and their prime number decomposition from the
+		binary file filename"""
+		with open(filename, 'wb') as f:
 			cPickle.dump(self.__DecomposedNumbers, f, cPickle.HIGHEST_PROTOCOL)
 
 	def erathostenesFilter(self, quantity):
+		"""Calculates all prime numbers up to quantity or the member variable
+		self.__MaxNumber, if it is larger
+    
+		The Sieve of Eratosthenes is a standard way to calculate prime numbers.
+		For more information confirm
+		en.wikipedia.org/wiki/Sieve_of_Eratosthenes"""
 		self.__checkForInt(quantity)
 		if self.__MaxNumber <= quantity:
 			self.__Primes = []
@@ -73,6 +90,8 @@ class Primes(object):
 		return self.__Primes
 
 	def primeFactorDecomposition(self, number):
+		"""Decompostion of number into prime numbers is calculated. It is
+		just performed by trial and error"""
 		primeFactors = []
 		result = None
 		self.__checkForInt(number)
